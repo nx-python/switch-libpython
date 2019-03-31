@@ -15,6 +15,8 @@ groups=('switch-portlibs')
 build() {
   cd cpython
 
+  cp ../../Setup Modules/Setup
+
   source /opt/devkitpro/switchvars.sh
 
   ./configure \
@@ -45,6 +47,9 @@ package() {
   make DESTDIR="$pkgdir" altbininstall libinstall inclinstall libainstall
 
   # remove the python binaries (we only care about libpython)
-  rm -r "$pkgdir/$PORTLIBS_PREFIX/bin"
+  rm -r $pkgdir$PORTLIBS_PREFIX/bin
+
+  # remove the test module (it's big)
+  rm -r $pkgdir$PORTLIBS_PREFIX/lib/python*/test
 }
 
